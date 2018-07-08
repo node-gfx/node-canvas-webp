@@ -35,13 +35,7 @@
         # Canvas dependencies:
         ['OS=="win"', {
           "libraries": [
-            '-l<(GTK_Root)/lib/cairo.lib',
-            '-l<(GTK_Root)/lib/libpng.lib',
-            '-l<(GTK_Root)/lib/pangocairo-1.0.lib',
-            '-l<(GTK_Root)/lib/pango-1.0.lib',
-            '-l<(GTK_Root)/lib/freetype.lib',
-            '-l<(GTK_Root)/lib/glib-2.0.lib',
-            '-l<(GTK_Root)/lib/gobject-2.0.lib'
+            '-l<(GTK_Root)/lib/cairo.lib'
           ],
           "include_dirs": [
             '<(GTK_Root)/include',
@@ -75,13 +69,7 @@
             }, {
               "libraries": ['-l../libwebp/win64/libwebp.lib']
             }]
-          ],
-          "copies": [{
-            "destination": "<(PRODUCT_DIR)",
-            "files": [
-              'C:/Users/zachb/git/canvas-webp/libwebp/win64/libwebp.lib'
-            ]
-          }]
+          ]
         }],
         ['OS=="linux"', {
           "libraries": ["../libwebp/linux-x86_64/libwebp.a"]
