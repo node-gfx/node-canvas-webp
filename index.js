@@ -30,6 +30,6 @@ Canvas.prototype.toBuffer = function (format, config, callback) {
 		}
 
 	} else {
-		oToBuffer.call(this, format, config, callback);
+		return oToBuffer.call(this, format, config, callback);
 	}
 };

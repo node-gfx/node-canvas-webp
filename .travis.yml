@@ -1,10 +1,13 @@
 language: node_js
 install:
-  - npm install --build-from-source
+  - gcc -v
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 90
+  - gcc -v
+  - CC=gcc-5 CXX=g++-5 npm install --build-from-source
 node_js:
-  - '10'
+  # - '10'
   - '8'
-  - '6'
+  # - '6'
 addons:
   apt:
     sources:
@@ -14,7 +17,9 @@ addons:
       - libjpeg8-dev
       - libpango1.0-dev
       - libgif-dev
-      - g++-4.9
+      - gcc-5
+      - g++-5
 env:
-  - CXX=g++-4.9
+  - CXX=g++-5 && CC=gcc-5
 sudo: false
+distro: trusty

@@ -1,16 +1,17 @@
 {
   "name": "canvas-webp",
   "version": "1.0.0",
-  "description": "Node-canvas extension to support WebP image encoding",
+  "description": "node-canvas extension to support WebP image encoding",
   "main": "index.js",
-  "repository": "https://github.com/node-gfx/canvas-webp",
+  "repository": "https://github.com/node-gfx/node-canvas-webp",
   "author": "Zach Bjornson <zbbjornson@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "canvas": "zbjornson/node-canvas#zb/dllpublic",
     "nan": "^2.10.0"
   },
-  "peerDependencies": {},
+  "devDependencies": {
+    "canvas": "zbjornson/node-canvas#zb/dllpublic"
+  },
   "scripts": {
     "test": "node ./test.js"
   }

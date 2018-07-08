@@ -1,4 +1,7 @@
 {
+  "variables": {
+    "Canvas_Src%": "<!(node find_canvas.js)"
+  },
   "conditions": [
     ['OS=="win"', {
       "variables": {
@@ -14,7 +17,7 @@
       ],
       "include_dirs" : [
           "<!(node -e \"require('nan')\")",
-          "<!(node find_canvas.js)",
+          "<(Canvas_Src)/src",
           "libwebp"
       ],
       "cflags": [
@@ -29,10 +32,9 @@
         "CLANG_CXX_LIBRARY": "libc++",
       },
       "conditions": [
+        # Canvas dependencies:
         ['OS=="win"', {
           "libraries": [
-            '-lC:/Users/zachb/git/canvas-webp/node_modules/canvas/build/Release/canvas.lib',
-            '-lC:/Users/zachb/git/canvas-webp/libwebp/win64/libwebp.lib',
             '-l<(GTK_Root)/lib/cairo.lib',
             '-l<(GTK_Root)/lib/libpng.lib',
             '-l<(GTK_Root)/lib/pangocairo-1.0.lib',
@@ -48,6 +50,31 @@
             '<(GTK_Root)/include/glib-2.0',
             '<(GTK_Root)/include/freetype2',
             '<(GTK_Root)/lib/glib-2.0/include'
+          ]
+        }, { # not windows
+          "libraries": [
+            "<!@(pkg-config cairo --libs)",
+            "<!@(pkg-config pangocairo --libs)"
+          ],
+          "include_dirs": [
+            "<!@(pkg-config cairo --cflags-only-I | sed s/-I//g)",
+            "<!@(pkg-config pangocairo --cflags-only-I | sed s/-I//g)"
+          ]
+        }],
+        # Canvas:
+        ['OS=="win"', {
+          "libraries": ['-l<(Canvas_Src)/build/Release/canvas.lib']
+        }, {
+          "libraries": ["<(Canvas_Src)/build/Release/canvas.node"]
+        }],
+        # The libwebp library:
+        ['OS=="win"', {
+          "conditions": [
+            ['target_arch=="ia32"', {
+              "libraries": ['-l../libwebp/win32/libwebp.lib']
+            }, {
+              "libraries": ['-l../libwebp/win64/libwebp.lib']
+            }]
           ],
           "copies": [{
             "destination": "<(PRODUCT_DIR)",
@@ -55,13 +82,12 @@
               'C:/Users/zachb/git/canvas-webp/libwebp/win64/libwebp.lib'
             ]
           }]
-        }, { # not windows
-          "libraries": [
-            "<!@(pkg-config cairo --libs)"
-          ],
-          "include_dirs": [
-            "<!@(pkg-config cairo --cflags-only-I | sed s/-I//g"
-          ]
+        }],
+        ['OS=="linux"', {
+          "libraries": ["../libwebp/linux-x86_64/libwebp.a"]
+        }],
+        ['OS=="mac"', {
+          "libraries": ["../libwebp/mac/libwebp.a"]
         }]
       ]
     }

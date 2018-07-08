@@ -3,3 +3,5 @@ yarn.lock
 .vs
 build
 libwebp/src
+test.webp
+test.png

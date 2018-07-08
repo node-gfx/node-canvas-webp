@@ -5,15 +5,25 @@ const fs = require("fs");
 // 1.x : 2.x
 const c = typeof Canvas === "function" ? new Canvas(200, 200) : Canvas.createCanvas(200, 200);
 const ctx = c.getContext("2d");
-ctx.fillStyle = "green";
-ctx.fillRect(0, 0, 50, 50);
-ctx.beginPath();
-ctx.fillStyle = "blue";
-ctx.fillRect(10, 10, 20, 20);
-ctx.beginPath();
-ctx.fillStyle = "red";
-ctx.fillRect(50, 50, 100, 150);
 
-const buff = c.toBuffer("image/webp", {lossless: true});
-fs.writeFileSync("./img.webp", buff);
-console.log("done");
+const colors = ["green", "blue", "red", "cyan", "yellow", "orange", "purple"];
+for (const color of colors) {
+	ctx.beginPath();
+	ctx.fillStyle = color;
+	ctx.fillRect(Math.random() * 50, Math.random() * 50, Math.random() * 150, Math.random() * 150);
+}
+
+let buff;
+console.time("webp");
+buff = c.toBuffer("image/webp", {lossless: true});
+console.timeEnd("webp");
+console.log("webp:", buff.byteLength);
+fs.writeFileSync("test.webp", buff);
+
+console.time("png");
+buff = c.toBuffer("image/png");
+console.timeEnd("png");
+console.log("png:", buff.byteLength);
+fs.writeFileSync("test.png", buff);
+
+console.log("OK");
