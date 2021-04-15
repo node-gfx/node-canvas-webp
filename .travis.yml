@@ -20,4 +20,4 @@ addons:
 env:
   - CXX=g++-9 && CC=gcc-9
 sudo: false
-distro: trusty
+distro: focal
