@@ -7,10 +7,10 @@
   "author": "Zach Bjornson <zbbjornson@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "nan": "^2.10.0"
+    "nan": "^2.14.2"
   },
   "devDependencies": {
-    "canvas": "zbjornson/node-canvas#zb/dllpublic"
+    "canvas": "Automattic/node-canvas"
   },
   "scripts": {
     "test": "node ./test.js"

@@ -5,14 +5,17 @@
 #include "cairo.h"
 #include <stdint.h>
 
+using v8::Object;
+using v8::Local;
+
 void free_webp(char* data, void* hint) {
   WebPFree(data);
 }
 
 NAN_METHOD(canvasToBufferWebp) {
-  Canvas *canvas = Nan::ObjectWrap::Unwrap<Canvas>(info[0]->ToObject());
-  float quality = static_cast<float>(info[1]->NumberValue()); // 0 to 100
-  bool lossless = info[2]->BooleanValue();
+  Canvas *canvas = Nan::ObjectWrap::Unwrap<Canvas>(info[0]->ToObject(Nan::GetCurrentContext()).ToLocalChecked());
+  float quality = static_cast<float>(info[1]->NumberValue(Nan::GetCurrentContext()).FromMaybe(75.0)); // 0 to 100
+  bool lossless = info[2]->BooleanValue(info.GetIsolate());
 
   cairo_surface_t *surface = canvas->surface();
   cairo_format_t format = cairo_image_surface_get_format(surface);
